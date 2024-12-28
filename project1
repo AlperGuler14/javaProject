@@ -1,0 +1,100 @@
+package SMStudent;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+// Ürün bilgilerini tutan sınıf
+class Product {
+    private String name;
+    private double price;
+
+    // Constructor: Ürün oluşturulurken ad ve fiyat atanır
+    public Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    // Ürünün adını döndürür
+    public String getName() {
+        return name;
+    }
+
+    // Ürünün fiyatını döndürür
+    public double getPrice() {
+        return price;
+    }
+}
+
+public class ShoppingCart {
+    // Sepeti tutan bir ArrayList
+    private ArrayList<Product> cart;
+
+    // Constructor: Yeni bir sepet oluşturur
+    public ShoppingCart() {
+        cart = new ArrayList<>();
+    }
+
+    // Sepete ürün ekleyen metot
+    public void addProduct(Product product) {
+        cart.add(product);
+        System.out.println(product.getName() + " sepete eklendi.");
+    }
+
+    // Toplam fiyatı hesaplayan metot
+    public double calculateTotal() {
+        double total = 0;
+        for (Product product : cart) {
+            total += product.getPrice();
+        }
+        return total;
+    }
+
+    // Sepetteki ürünleri listeleyen metot
+    public void listProducts() {
+        System.out.println("\nSepetinizdeki Ürünler:");
+        for (Product product : cart) {
+            System.out.println("- " + product.getName() + " | Fiyat: " + product.getPrice() + " TL");
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ShoppingCart shoppingCart = new ShoppingCart();
+
+        System.out.println("Market Yönetim Sistemi");
+        System.out.println("1. Ürün Ekle");
+        System.out.println("2. Sepeti Listele");
+        System.out.println("3. Toplam Fiyatı Gör");
+        System.out.println("4. Çıkış");
+
+        while (true) {
+            System.out.print("\nBir işlem seçin: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Enter karakterini temizle
+
+            if (choice == 1) {
+                System.out.print("Ürün adı: ");
+                String name = scanner.nextLine();
+                System.out.print("Ürün fiyatı: ");
+                double price = scanner.nextDouble();
+                Product product = new Product(name, price);
+                shoppingCart.addProduct(product);
+
+            } else if (choice == 2) {
+                shoppingCart.listProducts();
+
+            } else if (choice == 3) {
+                double total = shoppingCart.calculateTotal();
+                System.out.println("Toplam fiyat: " + total + " TL");
+
+            } else if (choice == 4) {
+                System.out.println("Çıkış yapılıyor...");
+                break;
+
+            } else {
+                System.out.println("Geçersiz seçim, tekrar deneyin.");
+            }
+        }
+    }
+}
+
